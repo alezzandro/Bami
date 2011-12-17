@@ -43,7 +43,7 @@ function readPdu() {
     while [ ${complete} -eq "0" ]; do
         line=`readLine`
         # End Of Message detected
-        if [ -z ${line} ]; then
+        if [ -z "${line}" ]; then
             complete=1
         else
             # Concat line read
@@ -57,7 +57,7 @@ function readPdu() {
 # the asterisk ami welcome message is not found.
 function login() {
     local welcome=`readLine`
-    if [ ${welcome} != "Asterisk Call Manager/1.1" ]; then
+    if [ "${welcome}" != "Asterisk Call Manager/1.1" ]; then
         error "Invalid peer. Not AMI."
         exit 255
     fi
@@ -76,7 +76,7 @@ login
 while [ true ]; do
     pdu=`readPdu`
     debug "${pdu}"
-    $regex="Event: *"
+    regex="Event: *"
     if [[ $pdu =~ $regex ]]; then
         eventName=`echo ${pdu} | cut -d' ' -f2`
         case ${eventName} in
